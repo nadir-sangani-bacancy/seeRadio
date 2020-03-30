@@ -8,6 +8,7 @@ import PublicRoute from './PublicRouting';
 import ClientContract from './client-contract';
 import AddCampaign from './AddCampaign';
 import CampaignTable from './CampaignTable';
+import campaignDetail from './campaignDetail';
 export default class App extends Component {
   render() {
     return (
@@ -18,6 +19,7 @@ export default class App extends Component {
           <PrivateRoute component={ClientContract} path="/client-contract" exact />
           <PrivateRoute component={CampaignTable} path="/campaign-table" exact />
           <PrivateRoute component={AddCampaign} path="/add-campaign" exact />
+          <PrivateRoute component={campaignDetail} path="/campaign-detail/:id" />
           <NotFound path="/"></NotFound>
           <Redirect to="/Login" />
         </Switch>

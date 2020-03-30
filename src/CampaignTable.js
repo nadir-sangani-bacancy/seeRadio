@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Container, Row, Col, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
+import { Button, Container, Row, Col, OverlayTrigger, Tooltip, Modal, Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-6'
 import 'react-table-6/react-table.css'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Pagination from './Pagination'
-import './App.css'
+import './App.css'; 
+
 
 
 class CampaignTable extends Component {
@@ -16,7 +17,8 @@ class CampaignTable extends Component {
     this.state = {
       data: [],
       Modaldata: "",
-      show: false
+      show: false,
+      sidebarOpen: false
     }
   }
 
@@ -47,6 +49,7 @@ class CampaignTable extends Component {
       show: false
     })
   }
+
 
   getModal = (a) => {
     console.log(a)
