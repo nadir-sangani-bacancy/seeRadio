@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
-import PrimaryContact, {BusinessAddress, BillingAddress, FirstComponant, SecondaryComponant } from './input'
-import './App.css';
-import Axios from 'axios';
-import { indusryformate, personsformate, getcountryformate, phoneval } from './helper';
 import { Button, Form, Col, Container, Row } from 'react-bootstrap';
-import { FormRow } from 'react-bootstrap/Form';
+import { indusryformate, personsformate, getcountryformate, phoneval } from './helper';
+import PrimaryContact, {BusinessAddress, BillingAddress, FirstComponant, SecondaryComponant } from './input'
 
+import Axios from 'axios';
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
+import './App.css';
+
 export default class ClientContract extends Component {
-
 
   constructor() {
     super()
@@ -47,6 +41,7 @@ export default class ClientContract extends Component {
       scountry: "",
       sstate_provision: "",
       spostal: "",
+
       //error state variable
       compnyName_error: "",
       compnyWebsiteAddress_error: "",
@@ -93,8 +88,8 @@ export default class ClientContract extends Component {
   }
 
   getdata() {
-    const { company, primarycontact, secondarycontact, businessaddress, billingaddress, addflag } = this.state
-
+    //const { company, primarycontact, secondarycontact, businessaddress, billingaddress, addflag } = this.state
+    //payload
     const sendData = {
       companyName: this.state.companyName,
       companyWebsite: this.state.compnyWebsiteAddress,
@@ -142,10 +137,12 @@ export default class ClientContract extends Component {
   nextButton = () => {
     let flag = true;
     let company_primary = ['compnyName', 'compnyWebsiteAddress', 'salesperson', 'industryCategory', 'firstname', 'lastname',
-      'email', 'phone', 'address', 'address2', 'city', 'country', 'state_provision', 'postal']
+                           'email', 'phone', 'address', 'address2', 'city', 'country', 'state_provision', 'postal']
     let secondary_con = ['saddress', 'saddress2', 'scity', 'scountry',
-      'sstate_provision', 'spostal']
+                         'sstate_provision', 'spostal']
     let con = ['sfirstname', 'slastname', 'semail', 'sphone',]
+
+    //regex to check validation
     let nameregex = /^[A-Za-z]{2,20}$/
     let emailregex = /^[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,}$/
     let postalregex = /^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] ?\d[A-Z]\d)$/
@@ -176,6 +173,7 @@ export default class ClientContract extends Component {
         flag = false
       }
     })
+    
     con.map(c => {
       if (this.state.sfirstname || this.state.slastname || this.state.semail || this.state.sphone) {
         if (this.state[c] === "") {
@@ -247,7 +245,6 @@ export default class ClientContract extends Component {
       })
     }
   }
-
 
   setselectValue = (e, a, b) => {
     //console.log(e)

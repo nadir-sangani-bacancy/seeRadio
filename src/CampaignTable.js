@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Container, Row, Col, OverlayTrigger, Tooltip, Modal, Nav, NavItem } from 'react-bootstrap';
+import { Button, Container, Row, Col, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import ReactTable from 'react-table-6'
-import 'react-table-6/react-table.css'
-import Axios from 'axios'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Pagination from './Pagination'
-import './App.css'; 
 
+
+import Axios from 'axios'
+import ReactTable from 'react-table-6'
+import Pagination from './Pagination'
+
+import './App.css';
+import 'react-table-6/react-table.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class CampaignTable extends Component {
@@ -29,7 +31,6 @@ class CampaignTable extends Component {
       "offset": 0,
       "soaID": localStorage.personid
     }
-
     Axios.post("http://localhost:8080/api/campaign/getAllCampaigns", data, {
       headers: {
         'x-token': localStorage.token
@@ -40,8 +41,7 @@ class CampaignTable extends Component {
           data: response.data.data.rows
         })
       })
-      .catch(error => error)
-
+      .catch(error => alert(error))
   }
 
   handleClose = () => {
@@ -49,7 +49,6 @@ class CampaignTable extends Component {
       show: false
     })
   }
-
 
   getModal = (a) => {
     console.log(a)
@@ -63,7 +62,6 @@ class CampaignTable extends Component {
           Modaldata: response.data.data,
           show: true
         })
-        //console.log("advertiser", response.data.data)
       })
       .catch(error => error)
   }
@@ -95,6 +93,7 @@ class CampaignTable extends Component {
           <Link to="#" onClick={() => this.getModal(row._original.statusWithPerson.id)}>
             {row._original.statusWithPerson.firstName}{" "}{row._original.statusWithPerson.lastName}
           </Link><br />
+          {/* tool tips shown on mouse hover */}
           <OverlayTrigger
             placement="right"
             delay={{ show: 250, hide: 400 }}
@@ -115,12 +114,12 @@ class CampaignTable extends Component {
       {
         Header: "Next Action Due By",
         accessor: "statusDueDate",
-        Cell: ({ row }) => (<>
-          {(new Date(row.statusDueDate)).toLocaleDateString('en-US', "dd-mmm-yyyy")}<br />
-          <span className="badge badge-danger">Overdue</span>
-        </>
+        Cell: ({ row }) => (
+          <>
+            {(new Date(row.statusDueDate)).toLocaleDateString('en-US', "dd-mmm-yyyy")}<br />
+            <span className="badge badge-danger">Overdue</span>
+          </>
         )
-
       },
       {
         Header: "Start",
@@ -131,7 +130,8 @@ class CampaignTable extends Component {
         accessor: "endDate",
       }
     ];
-    return (<>
+    return (
+    <>
       <div style={{ marginTop: "30px" }}>
         <Container>
           <Row>
@@ -144,16 +144,21 @@ class CampaignTable extends Component {
             <Col></Col>
           </Row>
           <Row>
-            <Col style={{ marginTop: "20px" }}>
-              <ReactTable data={this.state.data} columns={columns} minRows={10}
-                defaultPageSize={10} PaginationComponent={Pagination}
+            <Col style={{ marginTop: "20px", marginBottom : "20px" }}>
+              <ReactTable data={this.state.data} 
+                          columns={columns} minRows={10}
+                          defaultPageSize={10} 
+                          PaginationComponent={Pagination}
               />
             </Col>
           </Row>
         </Container>
       </div>
-      {this.state.Modaldata && <Modal show={this.state.show} onHide={() => this.handleClose()} centered>
-        <Modal.Header closeButton style={{ color: "white", backgroundColor: "#2d9af3" }}>
+      {this.state.Modaldata && 
+      <Modal show={this.state.show} onHide={() => this.handleClose()} centered>
+        <Modal.Header 
+          closeButton style={{ color: "white", backgroundColor: "#2d9af3" }}
+        >
           <Modal.Title>{this.state.Modaldata.person.firstName}{" "}{this.state.Modaldata.person.lastName}</Modal.Title>
         </Modal.Header>
         <Modal.Body >
@@ -171,7 +176,7 @@ class CampaignTable extends Component {
             <h4 className="text-graylight fw-700 border-bottom pb-2 mb-3">Contact Information</h4>
             <div className="row mb-4 mb-lg-5">
               <div className="col-xl-4 col-lg-5 mb-3 mb-lg-0">
-               <h6 className="text-black fw-700"><b>Address</b></h6>
+                <h6 className="text-black fw-700"><b>Address</b></h6>
                 <p className="text-black fw-700">{this.state.Modaldata.person.Address.address}</p>
                 <p className="fw-600 text-black mb-0">{this.state.Modaldata.person.Address.address2}</p>
                 <p className="fw-600 text-black mb-0">{this.state.Modaldata.person.Address.city}</p>
